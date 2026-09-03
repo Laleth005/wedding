@@ -38,7 +38,8 @@ export const CursorGlow: React.FC = () => {
         top: `${pos.y}px`,
         width: '400px',
         height: '400px',
-        background: 'radial-gradient(circle, rgba(243, 229, 200, 0.28) 0%, rgba(212, 175, 103, 0.08) 45%, rgba(255, 253, 247, 0) 70%)',
+        background:
+          'radial-gradient(circle, rgba(243, 229, 200, 0.28) 0%, rgba(212, 175, 103, 0.08) 45%, rgba(255, 253, 247, 0) 70%)',
         borderRadius: '50%',
         filter: 'blur(10px)',
       }}

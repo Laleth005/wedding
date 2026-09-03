@@ -23,7 +23,7 @@ export const TimelineSection: React.FC = () => {
   };
 
   return (
-    <section id="timeline" className="relative py-24 sm:py-32 px-4 sm:px-6 lg:px-8 overflow-hidden bg-[#FFFDF7]">
+    <section id="timeline" className="relative py-24 sm:py-32 px-4 sm:px-6 lg:px-8 overflow-hidden bg-[#FFFDF7] scroll-mt-24 sm:scroll-mt-28">
       <div className="relative z-10 max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center max-w-xl mx-auto mb-16 sm:mb-20">
@@ -64,7 +64,7 @@ export const TimelineSection: React.FC = () => {
                     isEven ? 'sm:flex-row-reverse' : 'sm:flex-row'
                   } flex-row pl-14 sm:pl-0`}
                 >
-                  {/* Center Node Indicator */}
+                  {/* Center Node Indicator with subtle ambient ripple ring */}
                   <motion.div
                     initial={{ scale: 0 }}
                     whileInView={{ scale: 1 }}
@@ -72,6 +72,19 @@ export const TimelineSection: React.FC = () => {
                     transition={{ duration: 0.5, delay: index * 0.15, type: 'spring' }}
                     className="absolute left-6 sm:left-1/2 -translate-x-1/2 w-10 h-10 rounded-full bg-[#FAF5E8] border-2 border-[#D4AF67] flex items-center justify-center shadow-md z-20 group"
                   >
+                    <motion.span
+                      animate={{
+                        scale: [1, 1.45, 1],
+                        opacity: [0.5, 0, 0.5],
+                      }}
+                      transition={{
+                        repeat: Infinity,
+                        duration: 3,
+                        delay: index * 0.4,
+                        ease: 'easeInOut',
+                      }}
+                      className="absolute inset-0 rounded-full border border-[#D4AF67] pointer-events-none"
+                    />
                     {getTimelineIcon(item.icon)}
                   </motion.div>
 

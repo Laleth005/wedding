@@ -239,19 +239,7 @@ export const HeroCinematicBackground: React.FC<HeroCinematicBackgroundProps> = (
           transition={{ duration: 2.2, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
         />
 
-        {/* Bottom border drawing line */}
-        <motion.line
-          x1="6%"
-          y1="97%"
-          x2="94%"
-          y2="97%"
-          stroke="url(#heroLineGold)"
-          strokeWidth="1"
-          strokeDasharray="1200"
-          initial={{ strokeDashoffset: 1200 }}
-          animate={{ strokeDashoffset: 0 }}
-          transition={{ duration: 2.2, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-        />
+        {/* Bottom border drawing line removed as requested */}
 
         {/* Left vertical framing line */}
         <motion.line

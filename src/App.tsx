@@ -36,9 +36,9 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#FFFDF7] text-[#5A5A40] relative selection:bg-[#E6D7B8] selection:text-[#1A1A1A] overflow-x-hidden font-serif">
-      {/* Natural Tones Outer Architectural Double Frame */}
-      <div className="fixed inset-0 pointer-events-none border-[8px] sm:border-[12px] border-[#FAF5E8] m-1 sm:m-3 z-30 transition-all duration-500" />
-      <div className="fixed inset-0 pointer-events-none border-[1px] border-[#D4AF67] m-3 sm:m-6 z-30 transition-all duration-500 opacity-80" />
+      {/* Natural Tones Outer Architectural Double Frame (with bottom line removed) */}
+      <div className="fixed inset-0 pointer-events-none border-t-[8px] border-x-[8px] sm:border-t-[12px] sm:border-x-[12px] border-b-0 border-[#FAF5E8] m-1 sm:m-3 z-30 transition-all duration-500" />
+      <div className="fixed inset-0 pointer-events-none border-t border-x border-b-0 border-[#D4AF67] m-3 sm:m-6 z-30 transition-all duration-500 opacity-80" />
 
       {/* Natural Tones Botanical Watermark Top-Right Accent */}
       <div className="fixed top-0 right-0 w-64 h-64 sm:w-96 sm:h-96 opacity-5 pointer-events-none z-0">
@@ -59,7 +59,7 @@ export default function App() {
       <CursorGlow />
 
       {/* Auspicious Wedding Ambient Music Controller */}
-      <MusicPlayer />
+      <MusicPlayer autoPlayRequested={true} />
 
       {/* Floating Button to open Royal Keepsake Envelope anytime */}
       <button

@@ -36,9 +36,13 @@ export const QuoteSection: React.FC = () => {
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
           className="font-cormorant italic text-3xl sm:text-5xl md:text-6xl text-[#1A1A1A] leading-snug sm:leading-tight px-4"
         >
-          <span className="gold-gradient-text drop-shadow-sm font-semibold">
+          <motion.span
+            animate={{ y: [0, -4, 0] }}
+            transition={{ repeat: Infinity, duration: 6, ease: 'easeInOut' }}
+            className="gold-gradient-text drop-shadow-sm font-semibold inline-block"
+          >
             “{COUPLE_DATA.primaryQuote}”
-          </span>
+          </motion.span>
         </motion.blockquote>
 
         <GoldDivider hasHeart className="my-6 sm:my-8" />

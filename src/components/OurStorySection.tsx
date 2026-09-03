@@ -1,15 +1,15 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { COUPLE_DATA } from '../data/weddingData';
 import { GoldDivider } from './FloralDecorations';
-import { Heart, Quote, Camera, Sparkles } from 'lucide-react';
-import { getStoredImage, saveStoredImage } from '../utils/imageStorage';
+import { Heart, Quote, Sparkles } from 'lucide-react';
+import { getStoredImage } from '../utils/imageStorage';
 
-const GROOM_STORAGE_KEY = 'balachandran_custom_groom_photo';
+const GROOM_STORAGE_KEY = '11.png';
 const BRIDE_STORAGE_KEY = 'karunya_custom_bride_photo';
 
 const GROOM_CANDIDATES = [
-  '/groom.jpg',
+  '/11.png',
   '/ChatGPT Image Sep 3, 2026, 01_28_38 PM.png',
   '/ChatGPT%20Image%20Sep%203%2C%202026%2C%2001_28_38%20PM.png',
   '/groom_candidate_1.jpg',
@@ -18,7 +18,7 @@ const GROOM_CANDIDATES = [
 ];
 
 const BRIDE_CANDIDATES = [
-  '/bride.jpg',
+  '/three.png',
   '/ChatGPT Image Sep 3, 2026, 02_02_57 PM.png',
   '/ChatGPT%20Image%20Sep%203%2C%202026%2C%2002_02_57%20PM.png',
   '/bride_candidate_1.jpg',
@@ -28,11 +28,6 @@ const BRIDE_CANDIDATES = [
 export const OurStorySection: React.FC = () => {
   const [groomImg, setGroomImg] = useState<string>(COUPLE_DATA.groom.image);
   const [brideImg, setBrideImg] = useState<string>(COUPLE_DATA.bride.image);
-  const [isDraggingGroom, setIsDraggingGroom] = useState<boolean>(false);
-  const [isDraggingBride, setIsDraggingBride] = useState<boolean>(false);
-
-  const groomInputRef = useRef<HTMLInputElement | null>(null);
-  const brideInputRef = useRef<HTMLInputElement | null>(null);
 
   // Initialize and check stored or candidate files
   useEffect(() => {
@@ -88,54 +83,8 @@ export const OurStorySection: React.FC = () => {
     loadBridePhoto();
   }, []);
 
-  const handleGroomFile = (file: File) => {
-    const reader = new FileReader();
-    reader.onload = async (e) => {
-      const dataUrl = e.target?.result as string;
-      if (dataUrl) {
-        setGroomImg(dataUrl);
-        await saveStoredImage(GROOM_STORAGE_KEY, dataUrl);
-      }
-    };
-    reader.readAsDataURL(file);
-  };
-
-  const handleBrideFile = (file: File) => {
-    const reader = new FileReader();
-    reader.onload = async (e) => {
-      const dataUrl = e.target?.result as string;
-      if (dataUrl) {
-        setBrideImg(dataUrl);
-        await saveStoredImage(BRIDE_STORAGE_KEY, dataUrl);
-      }
-    };
-    reader.readAsDataURL(file);
-  };
-
   return (
-    <section id="story" className="relative py-24 sm:py-32 px-4 sm:px-6 lg:px-8 overflow-hidden bg-[#FFFDF7]">
-      {/* Hidden file inputs for optional direct upload */}
-      <input
-        ref={groomInputRef}
-        type="file"
-        accept="image/*"
-        onChange={(e) => {
-          const f = e.target.files?.[0];
-          if (f) handleGroomFile(f);
-        }}
-        className="hidden"
-      />
-      <input
-        ref={brideInputRef}
-        type="file"
-        accept="image/*"
-        onChange={(e) => {
-          const f = e.target.files?.[0];
-          if (f) handleBrideFile(f);
-        }}
-        className="hidden"
-      />
-
+    <section id="story" className="relative py-24 sm:py-32 px-4 sm:px-6 lg:px-8 overflow-hidden bg-[#FFFDF7] scroll-mt-24 sm:scroll-mt-28">
       {/* Background Decorative Gold Watermark */}
       <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 select-none opacity-5 font-script text-[180px] sm:text-[280px] text-[#C6A15B] whitespace-nowrap z-0">
         Balachandran & Karunya
@@ -175,7 +124,19 @@ export const OurStorySection: React.FC = () => {
               transition={{ duration: 0.6, delay: 0.9, type: 'spring', stiffness: 200 }}
               className="absolute w-12 h-12 rounded-full bg-[#FAF5E8] border-2 border-[#D4AF67] flex items-center justify-center shadow-md"
             >
-              <Heart className="w-5 h-5 fill-[#C6A15B] text-[#D4AF67] animate-pulse" />
+              <motion.div
+                animate={{
+                  scale: [1, 1.18, 1],
+                  y: [0, -3, 0],
+                }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 2.4,
+                  ease: 'easeInOut',
+                }}
+              >
+                <Heart className="w-5 h-5 fill-[#C6A15B] text-[#D4AF67] drop-shadow-[0_1px_4px_rgba(212,175,103,0.4)]" />
+              </motion.div>
             </motion.div>
           </div>
 
@@ -196,22 +157,7 @@ export const OurStorySection: React.FC = () => {
               <div className="absolute bottom-3 right-3 w-4 h-4 border-b-2 border-r-2 border-[#D4AF67]" />
 
               {/* Portrait Image with Golden Border */}
-              <div
-                className={`relative mx-auto w-48 h-56 sm:w-56 sm:h-64 rounded-2xl overflow-hidden p-1.5 bg-[#E6D7B8] border transition-all duration-300 shadow-sm mb-6 ${
-                  isDraggingGroom ? 'border-[#8C6A28] ring-2 ring-[#D4AF67]' : 'border-[#D4AF67]'
-                }`}
-                onDragOver={(e) => {
-                  e.preventDefault();
-                  setIsDraggingGroom(true);
-                }}
-                onDragLeave={() => setIsDraggingGroom(false)}
-                onDrop={(e) => {
-                  e.preventDefault();
-                  setIsDraggingGroom(false);
-                  const f = e.dataTransfer.files?.[0];
-                  if (f) handleGroomFile(f);
-                }}
-              >
+              <div className="relative mx-auto w-48 h-56 sm:w-56 sm:h-64 rounded-2xl overflow-hidden p-1.5 bg-[#E6D7B8] border border-[#D4AF67] shadow-sm mb-6">
                 <img
                   src={groomImg}
                   alt={COUPLE_DATA.groom.name}
@@ -224,17 +170,6 @@ export const OurStorySection: React.FC = () => {
                   className="w-full h-full object-cover object-top rounded-xl group-hover:scale-105 transition-transform duration-700 ease-out"
                 />
                 <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-[#1A1A1A]/40 via-transparent to-transparent pointer-events-none" />
-                
-                {/* Upload badge */}
-                <button
-                  type="button"
-                  onClick={() => groomInputRef.current?.click()}
-                  className="absolute bottom-2 right-2 px-2.5 py-1 rounded-full bg-[#FAF5E8]/95 hover:bg-[#FAF5E8] border border-[#D4AF67] text-[#8C6A28] flex items-center gap-1 text-[10px] font-cinzel font-semibold tracking-wider uppercase transition-all duration-300 shadow-sm hover:scale-105 cursor-pointer backdrop-blur-xs"
-                  title="Upload / Change Groom Photo"
-                >
-                  <Camera className="w-3 h-3 text-[#C6A15B]" />
-                  <span>Change</span>
-                </button>
               </div>
 
               {/* Details */}
@@ -283,22 +218,7 @@ export const OurStorySection: React.FC = () => {
               <div className="absolute bottom-3 right-3 w-4 h-4 border-b-2 border-r-2 border-[#D4AF67]" />
 
               {/* Portrait Image with Golden Border */}
-              <div
-                className={`relative mx-auto w-48 h-56 sm:w-56 sm:h-64 rounded-2xl overflow-hidden p-1.5 bg-[#E6D7B8] border transition-all duration-300 shadow-sm mb-6 ${
-                  isDraggingBride ? 'border-[#8C6A28] ring-2 ring-[#D4AF67]' : 'border-[#D4AF67]'
-                }`}
-                onDragOver={(e) => {
-                  e.preventDefault();
-                  setIsDraggingBride(true);
-                }}
-                onDragLeave={() => setIsDraggingBride(false)}
-                onDrop={(e) => {
-                  e.preventDefault();
-                  setIsDraggingBride(false);
-                  const f = e.dataTransfer.files?.[0];
-                  if (f) handleBrideFile(f);
-                }}
-              >
+              <div className="relative mx-auto w-48 h-56 sm:w-56 sm:h-64 rounded-2xl overflow-hidden p-1.5 bg-[#E6D7B8] border border-[#D4AF67] shadow-sm mb-6">
                 <img
                   src={brideImg}
                   alt={COUPLE_DATA.bride.name}
@@ -311,17 +231,6 @@ export const OurStorySection: React.FC = () => {
                   className="w-full h-full object-cover object-top rounded-xl group-hover:scale-105 transition-transform duration-700 ease-out"
                 />
                 <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-[#1A1A1A]/40 via-transparent to-transparent pointer-events-none" />
-
-                {/* Upload badge */}
-                <button
-                  type="button"
-                  onClick={() => brideInputRef.current?.click()}
-                  className="absolute bottom-2 right-2 px-2.5 py-1 rounded-full bg-[#FAF5E8]/95 hover:bg-[#FAF5E8] border border-[#D4AF67] text-[#8C6A28] flex items-center gap-1 text-[10px] font-cinzel font-semibold tracking-wider uppercase transition-all duration-300 shadow-sm hover:scale-105 cursor-pointer backdrop-blur-xs"
-                  title="Upload / Change Bride Photo"
-                >
-                  <Camera className="w-3 h-3 text-[#C6A15B]" />
-                  <span>Change</span>
-                </button>
               </div>
 
               {/* Details */}

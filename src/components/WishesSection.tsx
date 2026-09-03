@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
+import confetti from 'canvas-confetti';
 import { INITIAL_BLESSINGS } from '../data/weddingData';
 import { GoldDivider } from './FloralDecorations';
 import { Quote, Send, Heart, Sparkles, MessageCircleHeart } from 'lucide-react';
@@ -30,11 +31,19 @@ export const WishesSection: React.FC = () => {
     setMessage('');
     setIsSent(true);
 
+    // Celebrate with joyous gold confetti burst
+    confetti({
+      particleCount: 75,
+      spread: 75,
+      origin: { y: 0.65 },
+      colors: ['#D4AF67', '#F5DFB3', '#C6A15B', '#FAF5E8'],
+    });
+
     setTimeout(() => setIsSent(false), 4000);
   };
 
   return (
-    <section id="wishes" className="relative py-24 sm:py-32 px-4 sm:px-6 lg:px-8 overflow-hidden bg-[#FFFDF7]">
+    <section id="wishes" className="relative py-24 sm:py-32 px-4 sm:px-6 lg:px-8 overflow-hidden bg-[#FFFDF7] scroll-mt-24 sm:scroll-mt-28">
       <div className="relative z-10 max-w-6xl mx-auto">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-16 sm:mb-20">

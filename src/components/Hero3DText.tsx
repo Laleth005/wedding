@@ -35,6 +35,39 @@ export const Hero3DText: React.FC<Hero3DTextProps> = ({
 
       {/* 2. 3D Floating Typography Container */}
       <div className="relative preserve-3d my-1 sm:my-2">
+        {/* Ambient floating twinkling sparkles */}
+        <motion.div
+          animate={{
+            opacity: [0.2, 1, 0.2],
+            scale: [0.75, 1.25, 0.75],
+            rotate: [0, 90, 180],
+          }}
+          transition={{
+            repeat: Infinity,
+            duration: 4,
+            ease: 'easeInOut',
+          }}
+          className="absolute -top-3 -right-3 text-[#D4AF67] pointer-events-none hidden sm:block"
+        >
+          <Sparkles className="w-4 h-4" />
+        </motion.div>
+
+        <motion.div
+          animate={{
+            opacity: [0.1, 0.9, 0.1],
+            scale: [0.7, 1.2, 0.7],
+            rotate: [180, 90, 0],
+          }}
+          transition={{
+            repeat: Infinity,
+            duration: 5,
+            delay: 1.5,
+            ease: 'easeInOut',
+          }}
+          className="absolute -bottom-2 -left-3 text-[#C6A15B] pointer-events-none hidden sm:block"
+        >
+          <Sparkles className="w-3.5 h-3.5" />
+        </motion.div>
 
         {/* --- BALACHANDRAN --- */}
         <div className="overflow-visible">
@@ -83,17 +116,26 @@ export const Hero3DText: React.FC<Hero3DTextProps> = ({
               BALACHANDRAN
             </span>
 
-            {/* Light sweep specular traveling sheen */}
+            {/* Light sweep specular traveling sheen with periodic repeat */}
             <motion.span
               initial={{ x: '-100%', opacity: 0 }}
-              animate={{ x: '200%', opacity: [0, 0.7, 0] }}
-              transition={{ duration: 1.6, delay: 2.2, ease: 'easeInOut' }}
+              animate={{
+                x: ['-100%', '200%', '200%'],
+                opacity: [0, 0.75, 0],
+              }}
+              transition={{
+                duration: 2.2,
+                repeat: Infinity,
+                repeatDelay: 5,
+                delay: 2.2,
+                ease: 'easeInOut',
+              }}
               className="absolute inset-0 bg-gradient-to-r from-transparent via-white/70 to-transparent skew-x-[-20deg] pointer-events-none mix-blend-overlay"
             />
           </motion.div>
         </div>
 
-        {/* --- & (Smaller & More Elegant) --- */}
+        {/* --- & (Smaller & More Elegant with subtle floating breathing) --- */}
         <div className="my-1 sm:my-2 flex items-center justify-center md:justify-start gap-4">
           <motion.div
             key={`ampersand-${replayKey}`}
@@ -117,9 +159,24 @@ export const Hero3DText: React.FC<Hero3DTextProps> = ({
             className="flex items-center gap-3"
           >
             <div className="h-[1px] w-8 sm:w-14 bg-gradient-to-r from-[#D4AF67] to-transparent" />
-            <span className="font-script text-3xl sm:text-4xl md:text-5xl text-[#C6A15B] drop-shadow-sm">
+            <motion.span
+              animate={
+                isSettled
+                  ? {
+                      scale: [1, 1.1, 1],
+                      rotate: [0, 2, 0, -2, 0],
+                    }
+                  : {}
+              }
+              transition={{
+                repeat: Infinity,
+                duration: 3.5,
+                ease: 'easeInOut',
+              }}
+              className="font-script text-3xl sm:text-4xl md:text-5xl text-[#C6A15B] drop-shadow-sm inline-block"
+            >
               &
-            </span>
+            </motion.span>
             <div className="h-[1px] w-8 sm:w-14 bg-gradient-to-l from-[#D4AF67] to-transparent" />
           </motion.div>
         </div>
@@ -171,11 +228,20 @@ export const Hero3DText: React.FC<Hero3DTextProps> = ({
               KARUNYA
             </span>
 
-            {/* Light sweep specular traveling sheen */}
+            {/* Light sweep specular traveling sheen with periodic repeat */}
             <motion.span
               initial={{ x: '-100%', opacity: 0 }}
-              animate={{ x: '200%', opacity: [0, 0.7, 0] }}
-              transition={{ duration: 1.6, delay: 2.5, ease: 'easeInOut' }}
+              animate={{
+                x: ['-100%', '200%', '200%'],
+                opacity: [0, 0.75, 0],
+              }}
+              transition={{
+                duration: 2.2,
+                repeat: Infinity,
+                repeatDelay: 5,
+                delay: 2.8,
+                ease: 'easeInOut',
+              }}
               className="absolute inset-0 bg-gradient-to-r from-transparent via-white/70 to-transparent skew-x-[-20deg] pointer-events-none mix-blend-overlay"
             />
           </motion.div>

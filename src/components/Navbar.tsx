@@ -34,7 +34,9 @@ const MOBILE_NAV_ITEMS: NavItem[] = [
   { label: 'RSVP', href: '#rsvp' },
 ];
 
-export const Navbar: React.FC<NavbarProps> = ({ onOpenEnvelope }) => {
+export const Navbar: React.FC<NavbarProps> = ({
+  onOpenEnvelope,
+}) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
@@ -75,25 +77,32 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenEnvelope }) => {
 
   const handleNavClick = (href: string) => {
     setIsMobileOpen(false);
-    const target = document.querySelector(href);
+    const targetId = href.replace('#', '');
+    const target = document.getElementById(targetId);
     if (target) {
-      target.scrollIntoView({ behavior: 'smooth' });
+      const navOffset = window.innerWidth < 640 ? 80 : 96;
+      const elementPosition = target.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - navOffset;
+      window.scrollTo({
+        top: Math.max(0, offsetPosition),
+        behavior: 'smooth',
+      });
     }
   };
 
   return (
     <>
       {/* Floating Royal Capsule Header */}
-      <header className="fixed top-3 sm:top-4 md:top-5 left-0 right-0 z-40 px-3 sm:px-6 lg:px-8 pointer-events-none">
+      <header className="fixed top-3 sm:top-4 md:top-5 left-0 right-0 z-50 px-3 sm:px-6 lg:px-8 pointer-events-none">
         <div
-          className={`pointer-events-auto max-w-7xl mx-auto transition-all duration-300 rounded-full bg-[#FFFDF7]/95 backdrop-blur-xl border border-[#D4AF67]/60 shadow-[0_12px_36px_-6px_rgba(142,103,29,0.16),0_2px_14px_rgba(212,175,103,0.2)] relative overflow-hidden ${
+          className={`pointer-events-auto max-w-7xl mx-auto transition-all duration-300 rounded-full bg-[#FFFDF7]/95 backdrop-blur-xl border border-[#D4AF67]/60 shadow-[0_12px_36px_-6px_rgba(142,103,29,0.16),0_2px_14px_rgba(212,175,103,0.2)] relative ${
             isScrolled
-              ? 'py-2.5 sm:py-3 px-4 sm:px-6 shadow-[0_16px_40px_-6px_rgba(142,103,29,0.2)]'
-              : 'py-3 sm:py-3.5 px-4 sm:px-6 lg:px-7'
+              ? 'py-2 sm:py-2.5 px-3.5 sm:px-5 shadow-[0_16px_40px_-6px_rgba(142,103,29,0.2)]'
+              : 'py-2.5 sm:py-3 px-3.5 sm:px-6'
           }`}
         >
           {/* Subtle Integrated Bottom Gold Scroll Progress Line */}
-          <div className="absolute -bottom-[1px] left-8 right-8 h-[2.5px] bg-transparent overflow-hidden rounded-full pointer-events-none">
+          <div className="absolute -bottom-[1px] left-8 right-8 h-[2px] bg-transparent overflow-hidden rounded-full pointer-events-none">
             <div
               className="h-full bg-gradient-to-r from-[#D4AF67] via-[#F5DFB3] to-[#C6A15B] transition-all duration-150 rounded-full"
               style={{ width: `${scrollProgress}%` }}
@@ -109,31 +118,31 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenEnvelope }) => {
                 e.preventDefault();
                 handleNavClick('#hero');
               }}
-              className="flex items-center gap-2.5 sm:gap-3 group focus:outline-none shrink-0"
+              className="flex items-center gap-2 sm:gap-3 group focus:outline-none shrink-0 min-w-0"
             >
               {/* Royal Medallion */}
-              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-[#D4AF67] p-0.5 shadow-xs bg-gradient-to-br from-[#FFFDF7] via-[#FAF5E8] to-[#F3E5C8] flex items-center justify-center group-hover:scale-105 group-hover:border-[#C6A15B] transition-all duration-200 shrink-0">
+              <div className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded-full border border-[#D4AF67] p-0.5 shadow-xs bg-gradient-to-br from-[#FFFDF7] via-[#FAF5E8] to-[#F3E5C8] flex items-center justify-center group-hover:scale-105 group-hover:border-[#C6A15B] transition-all duration-200 shrink-0">
                 <div className="w-full h-full rounded-full border border-dashed border-[#C6A15B]/60 flex items-center justify-center">
-                  <span className="font-cinzel text-xs sm:text-sm font-bold text-[#A68037] tracking-wider">
+                  <span className="font-cinzel text-[11px] sm:text-xs md:text-sm font-bold text-[#A68037] tracking-wider">
                     BK
                   </span>
                 </div>
               </div>
 
-              <div className="flex flex-col justify-center min-w-0">
-                <span className="font-cinzel text-xs sm:text-sm md:text-[14px] xl:text-[15px] tracking-[0.14em] sm:tracking-[0.18em] uppercase font-bold text-[#1A1A1A] group-hover:text-[#C6A15B] transition-colors leading-tight whitespace-nowrap flex items-center gap-1.5">
-                  <span>Balachandran</span>
-                  <span className="text-[#C6A15B] font-serif font-normal">&bull;</span>
-                  <span>Karunya</span>
+              <div className="flex flex-col justify-center min-w-0 truncate">
+                <span className="font-cinzel text-xs sm:text-sm md:text-[14px] xl:text-[15px] tracking-[0.12em] sm:tracking-[0.16em] uppercase font-bold text-[#1A1A1A] group-hover:text-[#C6A15B] transition-colors leading-tight truncate flex items-center gap-1 sm:gap-1.5">
+                  <span className="truncate">Balachandran</span>
+                  <span className="text-[#C6A15B] font-serif font-normal shrink-0">&bull;</span>
+                  <span className="truncate">Karunya</span>
                 </span>
-                <span className="font-sans text-[8.5px] sm:text-[9.5px] uppercase tracking-[0.22em] text-[#C6A15B] font-semibold leading-tight mt-0.5 whitespace-nowrap hidden sm:block">
+                <span className="font-sans text-[8.5px] sm:text-[9.5px] uppercase tracking-[0.22em] text-[#C6A15B] font-semibold leading-tight mt-0.5 whitespace-nowrap hidden md:block truncate">
                   October 15, 2026 &bull; Chennai
                 </span>
               </div>
             </a>
 
-            {/* Center: Desktop Navigation Links (All 7 links grouped, beautifully centered) */}
-            <nav className="hidden lg:flex items-center gap-1 xl:gap-2 2xl:gap-3 justify-center flex-1 mx-1 xl:mx-2">
+            {/* Center: Desktop Navigation Links (Shown on XL screens where ample space is guaranteed) */}
+            <nav className="hidden xl:flex items-center gap-1 2xl:gap-2 justify-center flex-1 mx-2">
               {DESKTOP_NAV_ITEMS.map((item) => {
                 const isActive = activeSection === item.href.substring(1);
                 return (
@@ -141,7 +150,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenEnvelope }) => {
                     key={item.label}
                     type="button"
                     onClick={() => handleNavClick(item.href)}
-                    className={`relative py-1 px-2 xl:px-2.5 font-cinzel text-[11px] xl:text-xs tracking-[0.12em] xl:tracking-[0.14em] uppercase font-semibold transition-colors duration-200 cursor-pointer whitespace-nowrap ${
+                    className={`relative py-1 px-2.5 font-cinzel text-xs tracking-[0.14em] uppercase font-semibold transition-colors duration-200 cursor-pointer whitespace-nowrap shrink-0 ${
                       isActive ? 'text-[#1A1A1A]' : 'text-[#5A5A40] hover:text-[#1A1A1A]'
                     }`}
                   >
@@ -158,48 +167,36 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenEnvelope }) => {
               })}
             </nav>
 
-            {/* Right: Actions (Desktop & Tablet) */}
-            <div className="hidden sm:flex items-center gap-2 xl:gap-2.5 shrink-0">
+            {/* Right: Unified Action Controls (Never overlaps, shrink-0, robust responsive layout) */}
+            <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+              {/* Royal Keepsake Envelope / Invite Pill (shown when screen >= sm) */}
               {onOpenEnvelope && (
                 <button
                   type="button"
                   onClick={onOpenEnvelope}
-                  className="h-8 sm:h-8.5 px-3 rounded-full bg-[#FAF5E8] hover:bg-[#F3E5C8] text-[#1A1A1A] border border-[#D4AF67] text-[10.5px] tracking-[0.14em] uppercase font-cinzel font-semibold transition-all duration-200 flex items-center gap-1.5 cursor-pointer shadow-xs hover:scale-105 shrink-0"
-                  title="Open Royal Envelope"
+                  className="hidden sm:inline-flex items-center gap-1.5 h-8 sm:h-8.5 px-3 rounded-full bg-[#FAF5E8] hover:bg-[#F3E5C8] text-[#1A1A1A] border border-[#D4AF67] text-[10px] sm:text-[10.5px] tracking-[0.14em] uppercase font-cinzel font-semibold transition-all duration-200 shadow-xs hover:scale-105 cursor-pointer shrink-0 whitespace-nowrap"
+                  title="Open Royal Invitation Envelope"
                 >
                   <MailOpen className="w-3.5 h-3.5 text-[#C6A15B]" />
                   <span className="hidden md:inline">Invite</span>
                 </button>
               )}
 
+              {/* Dedicated RSVP Button - Perfectly sized, never clipped, never overlaps */}
               <button
                 type="button"
                 onClick={() => handleNavClick('#rsvp')}
-                className="h-8 sm:h-8.5 px-4 sm:px-4.5 rounded-full bg-gradient-to-r from-[#D4AF67] via-[#C6A15B] to-[#B5914A] hover:from-[#C6A15B] hover:to-[#A37E36] text-white text-[10.5px] tracking-[0.2em] uppercase font-cinzel font-bold shadow-xs hover:shadow transition-all duration-200 flex items-center gap-1.5 cursor-pointer hover:scale-105 shrink-0"
+                className="h-8 sm:h-8.5 px-3.5 sm:px-4.5 rounded-full bg-gradient-to-r from-[#D4AF67] via-[#C6A15B] to-[#B5914A] hover:from-[#C6A15B] hover:to-[#A37E36] text-white text-[10px] sm:text-[10.5px] tracking-[0.18em] uppercase font-cinzel font-bold shadow-xs hover:shadow transition-all duration-200 flex items-center gap-1.5 cursor-pointer hover:scale-105 shrink-0 whitespace-nowrap"
               >
                 <span>RSVP</span>
-                <Heart className="w-3 h-3 fill-current text-white/95" />
+                <Heart className="w-3 h-3 fill-current text-white/95 shrink-0" />
               </button>
-            </div>
 
-            {/* Mobile & Tablet Controls: Menu Toggle (shown when screen < lg) */}
-            <div className="flex lg:hidden items-center gap-2 shrink-0">
-              {/* On mobile (< sm), show RSVP button next to hamburger */}
-              <div className="sm:hidden">
-                <button
-                  type="button"
-                  onClick={() => handleNavClick('#rsvp')}
-                  className="h-8 px-3 rounded-full bg-gradient-to-r from-[#D4AF67] to-[#C6A15B] text-white text-[10px] tracking-[0.18em] uppercase font-cinzel font-bold shadow-xs flex items-center gap-1 cursor-pointer"
-                >
-                  <span>RSVP</span>
-                  <Heart className="w-2.5 h-2.5 fill-current text-white/90" />
-                </button>
-              </div>
-
+              {/* Menu Toggle for mobile & tablet (screens < xl) */}
               <button
                 type="button"
                 onClick={() => setIsMobileOpen(!isMobileOpen)}
-                className="w-8.5 h-8.5 rounded-full border border-[#D4AF67] bg-[#FAF5E8] text-[#5A5A40] hover:text-[#1A1A1A] flex items-center justify-center transition-colors focus:outline-none cursor-pointer"
+                className="xl:hidden w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-full border border-[#D4AF67] bg-[#FAF5E8] text-[#5A5A40] hover:text-[#1A1A1A] flex items-center justify-center transition-colors focus:outline-none cursor-pointer shrink-0"
                 aria-label="Toggle navigation menu"
               >
                 {isMobileOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4 text-[#5A5A40]" />}

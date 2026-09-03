@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import { Sparkles, Heart, BellRing, CalendarCheck } from 'lucide-react';
+import confetti from 'canvas-confetti';
 import { COUPLE_DATA } from '../data/weddingData';
 import { GoldDivider } from './FloralDecorations';
 
@@ -61,6 +62,14 @@ export const CountdownSection: React.FC = () => {
   ];
 
   const handleAddToCalendar = () => {
+    // Celebrate with joyous gold confetti burst
+    confetti({
+      particleCount: 80,
+      spread: 70,
+      origin: { y: 0.7 },
+      colors: ['#D4AF67', '#FAF5E8', '#F3E5C8', '#C6A15B', '#8C6A28'],
+    });
+
     // Generate Google Calendar Link for June 15, 2025 at 5:30 PM (17:30 IST is 12:00 UTC)
     const title = encodeURIComponent('Balachandran & Karunya Wedding');
     const details = encodeURIComponent('Together with their families, invite you to celebrate their royal wedding ceremony & reception at Ocean Breeze Beach Resort, ECR, Chennai.');
@@ -71,7 +80,7 @@ export const CountdownSection: React.FC = () => {
   };
 
   return (
-    <section id="countdown" className="relative py-20 sm:py-28 px-4 sm:px-6 lg:px-8 overflow-hidden bg-gradient-to-b from-[#FFFDF7] via-[#FAF5E8] to-[#FFFDF7]">
+    <section id="countdown" className="relative py-20 sm:py-28 px-4 sm:px-6 lg:px-8 overflow-hidden bg-gradient-to-b from-[#FFFDF7] via-[#FAF5E8] to-[#FFFDF7] scroll-mt-24 sm:scroll-mt-28">
       {/* Background radial gold aura */}
       <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-gradient-to-r from-[#D4AF67]/15 via-[#F3E5C8]/30 to-[#D4AF67]/15 rounded-full blur-3xl opacity-70" />
 
@@ -104,8 +113,8 @@ export const CountdownSection: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
-              whileHover={{ y: -4, transition: { duration: 0.2 } }}
-              className="relative rounded-2xl p-5 sm:p-7 bg-[#FAF5E8] border border-[#D4AF67] text-center shadow-md group"
+              whileHover={{ y: -6, scale: 1.02, transition: { duration: 0.2 } }}
+              className="relative rounded-2xl p-5 sm:p-7 bg-[#FAF5E8] border border-[#D4AF67] text-center shadow-md group overflow-hidden"
             >
               {/* Corner gold ticks */}
               <div className="absolute top-2 left-2 w-2.5 h-2.5 border-t border-l border-[#D4AF67]" />
@@ -113,9 +122,20 @@ export const CountdownSection: React.FC = () => {
               <div className="absolute bottom-2 left-2 w-2.5 h-2.5 border-b border-l border-[#D4AF67]" />
               <div className="absolute bottom-2 right-2 w-2.5 h-2.5 border-b border-r border-[#D4AF67]" />
 
-              {/* Number display */}
-              <div className="font-cinzel font-bold text-4xl sm:text-5xl md:text-6xl text-[#1A1A1A] tracking-tight group-hover:scale-105 transition-transform duration-300">
-                {String(unit.value).padStart(2, '0')}
+              {/* Number display with smooth entrance flip on value change */}
+              <div className="font-cinzel font-bold text-4xl sm:text-5xl md:text-6xl text-[#1A1A1A] tracking-tight group-hover:scale-105 transition-transform duration-300 h-14 sm:h-16 flex items-center justify-center overflow-hidden">
+                <AnimatePresence mode="popLayout">
+                  <motion.span
+                    key={unit.value}
+                    initial={{ y: 8, opacity: 0.6 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: -8, opacity: 0.4 }}
+                    transition={{ duration: 0.28, ease: 'easeOut' }}
+                    className="inline-block"
+                  >
+                    {String(unit.value).padStart(2, '0')}
+                  </motion.span>
+                </AnimatePresence>
               </div>
 
               {/* Label */}
@@ -123,8 +143,8 @@ export const CountdownSection: React.FC = () => {
                 {unit.label}
               </div>
 
-              {/* Ambient shimmer */}
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-transparent via-white/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+              {/* Ambient shimmer hover sheen */}
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-transparent via-white/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
             </motion.div>
           ))}
         </div>

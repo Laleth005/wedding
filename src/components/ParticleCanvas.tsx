@@ -25,6 +25,18 @@ interface GoldParticle {
   pulseAngle: number;
 }
 
+interface StarSparkle {
+  x: number;
+  y: number;
+  size: number;
+  speedY: number;
+  speedX: number;
+  opacity: number;
+  pulseSpeed: number;
+  pulseAngle: number;
+  rotation: number;
+}
+
 export const ParticleCanvas: React.FC<{
   enablePetals?: boolean;
   enableGoldDust?: boolean;
@@ -78,7 +90,7 @@ export const ParticleCanvas: React.FC<{
           opacity: Math.random() * 0.4 + 0.4,
           color: petalColors[Math.floor(Math.random() * petalColors.length)],
           wobble: Math.random() * Math.PI * 2,
-          wobbleSpeed: Math.random() * 0.03 + 0.01,
+          wobbleSpeed: Math.random() * 0.02 + 0.01,
         });
       }
     }
@@ -91,32 +103,76 @@ export const ParticleCanvas: React.FC<{
         goldDust.push({
           x: Math.random() * width,
           y: Math.random() * height,
-          radius: Math.random() * 1.8 + 0.5,
-          speedY: -(Math.random() * 0.4 + 0.15),
-          speedX: (Math.random() - 0.5) * 0.25,
-          opacity: Math.random() * 0.6 + 0.2,
-          pulseSpeed: Math.random() * 0.04 + 0.015,
+          radius: Math.random() * 1.4 + 0.6,
+          speedY: -(Math.random() * 0.3 + 0.1), // Float upwards slowly
+          speedX: (Math.random() - 0.5) * 0.2,
+          opacity: Math.random() * 0.5 + 0.2,
+          pulseSpeed: Math.random() * 0.03 + 0.01,
           pulseAngle: Math.random() * Math.PI * 2,
         });
       }
     }
 
-    // Draw single petal shape
+    // Initialize delicate gold star sparkles
+    const starCount = Math.min(12, Math.floor(width / 120));
+    const stars: StarSparkle[] = [];
+    for (let i = 0; i < starCount; i++) {
+      stars.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        size: Math.random() * 4 + 3,
+        speedY: -(Math.random() * 0.2 + 0.08),
+        speedX: (Math.random() - 0.5) * 0.15,
+        opacity: Math.random() * 0.6 + 0.3,
+        pulseSpeed: Math.random() * 0.025 + 0.015,
+        pulseAngle: Math.random() * Math.PI * 2,
+        rotation: Math.random() * 360,
+      });
+    }
+
+    // Draw single 4-pointed diamond star
+    const drawStar = (s: StarSparkle) => {
+      const currentOpacity = s.opacity * (0.2 + 0.8 * Math.max(0, Math.sin(s.pulseAngle)));
+      if (currentOpacity <= 0.05) return;
+
+      ctx.save();
+      ctx.translate(s.x, s.y);
+      ctx.rotate((s.rotation * Math.PI) / 180);
+
+      ctx.beginPath();
+      const r = s.size;
+      const innerR = s.size * 0.22;
+      for (let i = 0; i < 4; i++) {
+        const angle = (i * Math.PI) / 2;
+        const innerAngle = angle + Math.PI / 4;
+        ctx.lineTo(Math.cos(angle) * r, Math.sin(angle) * r);
+        ctx.lineTo(Math.cos(innerAngle) * innerR, Math.sin(innerAngle) * innerR);
+      }
+      ctx.closePath();
+
+      ctx.fillStyle = `rgba(245, 225, 185, ${currentOpacity})`;
+      ctx.shadowColor = 'rgba(212, 175, 103, 0.7)';
+      ctx.shadowBlur = 8;
+      ctx.fill();
+      ctx.restore();
+    };
+
+    // Draw single botanical petal shape
     const drawPetal = (p: Petal) => {
       ctx.save();
       ctx.translate(p.x, p.y);
       ctx.rotate((p.rotation * Math.PI) / 180);
-      ctx.scale(Math.sin(p.wobble) * 0.3 + 0.85, 1);
+      ctx.scale(Math.sin(p.wobble) * 0.3 + 0.7, 1);
 
       ctx.beginPath();
+      // Teardrop/almond curved petal
       ctx.moveTo(0, 0);
-      ctx.bezierCurveTo(-p.size / 2, -p.size / 2, -p.size, p.size / 3, 0, p.size);
-      ctx.bezierCurveTo(p.size, p.size / 3, p.size / 2, -p.size / 2, 0, 0);
+      ctx.bezierCurveTo(-p.size * 0.5, p.size * 0.4, -p.size * 0.6, p.size * 0.8, 0, p.size);
+      ctx.bezierCurveTo(p.size * 0.6, p.size * 0.8, p.size * 0.5, p.size * 0.4, 0, 0);
       ctx.closePath();
 
       ctx.fillStyle = p.color;
-      ctx.shadowColor = 'rgba(212, 175, 103, 0.2)';
-      ctx.shadowBlur = 4;
+      ctx.globalAlpha = p.opacity;
       ctx.fill();
 
       // Delicate gold vein
@@ -161,7 +217,24 @@ export const ParticleCanvas: React.FC<{
         }
       }
 
-      // 2. Render Petals
+      // 2. Render Stars (Delicate Twinkling Starlight)
+      for (let i = 0; i < stars.length; i++) {
+        const s = stars[i];
+        s.y += s.speedY;
+        s.x += s.speedX;
+        s.pulseAngle += s.pulseSpeed;
+
+        if (s.y < -15) {
+          s.y = height + 15;
+          s.x = Math.random() * width;
+        }
+        if (s.x < -15) s.x = width + 15;
+        if (s.x > width + 15) s.x = -15;
+
+        drawStar(s);
+      }
+
+      // 3. Render Petals
       if (enablePetals) {
         for (let i = 0; i < petals.length; i++) {
           const p = petals[i];

@@ -56,7 +56,7 @@ export const EventsSection: React.FC = () => {
   };
 
   return (
-    <section id="events" className="relative py-24 sm:py-32 px-4 sm:px-6 lg:px-8 overflow-hidden bg-[#FFFDF7]">
+    <section id="events" className="relative py-24 sm:py-32 px-4 sm:px-6 lg:px-8 overflow-hidden bg-[#FFFDF7] scroll-mt-24 sm:scroll-mt-28">
       <div className="relative z-10 max-w-6xl mx-auto">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-16 sm:mb-20">
@@ -96,9 +96,17 @@ export const EventsSection: React.FC = () => {
 
                 {/* Top Icon Badge & Tag */}
                 <div className="flex items-center justify-between gap-4 mb-5">
-                  <div className="w-12 h-12 rounded-2xl bg-[#E6D7B8]/60 border border-[#D4AF67] flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform duration-300">
+                  <motion.div
+                    animate={{ y: [0, -3.5, 0] }}
+                    transition={{
+                      repeat: Infinity,
+                      duration: 3 + idx * 0.5,
+                      ease: 'easeInOut',
+                    }}
+                    className="w-12 h-12 rounded-2xl bg-[#E6D7B8]/60 border border-[#D4AF67] flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform duration-300"
+                  >
                     {getEventIcon(event.iconName)}
-                  </div>
+                  </motion.div>
 
                   <span className="font-cinzel text-[10px] uppercase tracking-[0.25em] font-semibold text-[#C6A15B] px-3.5 py-1 rounded-full bg-[#FFFDF7] border border-[#D4AF67]">
                     Event 0{idx + 1}
