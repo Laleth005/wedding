@@ -1,0 +1,6 @@
+{
+  "name": "Balachandran & Karunya Wedding Invitation",
+  "description": "A luxury royal animated wedding invitation website for Balachandran and Karunya, featuring a cinematic envelope opening, golden wax seal, interactive RSVP, wedding events, countdown, and our story.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

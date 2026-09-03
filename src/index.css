@@ -1,0 +1,205 @@
+@import "tailwindcss";
+
+@theme {
+  --font-cinzel: 'Cinzel', serif;
+  --font-cormorant: 'Cormorant Garamond', serif;
+  --font-script: 'Great Vibes', cursive;
+  --font-sans: 'Montserrat', sans-serif;
+
+  /* Natural Tones Theme Colors */
+  --color-ivory: #FFFDF7;
+  --color-cream: #FAF5E8;
+  --color-sand: #E6D7B8;
+  --color-natural-text: #5A5A40;
+  --color-natural-dark: #1A1A1A;
+  --color-gold: #D4AF67;
+  --color-gold-dark: #C6A15B;
+  --color-gold-deep: #8C6A28;
+}
+
+/* Custom font helper classes */
+.font-cinzel {
+  font-family: 'Cinzel', serif;
+}
+
+.font-cormorant {
+  font-family: 'Cormorant Garamond', serif;
+}
+
+.font-script {
+  font-family: 'Great Vibes', cursive;
+}
+
+.font-sans-luxury {
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Natural Tones metallic & gold text accents */
+.gold-gradient-text {
+  background: linear-gradient(135deg, #1A1A1A 0%, #5A5A40 30%, #C6A15B 60%, #D4AF67 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gold-gradient-text-subtle {
+  background: linear-gradient(135deg, #5A5A40 0%, #8C6A28 50%, #C6A15B 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Natural Tones button: Solid warm gold with uppercase tracking */
+.gold-gradient-btn {
+  background: #D4AF67;
+  color: #FFFFFF;
+  box-shadow: 0 6px 20px -4px rgba(212, 175, 103, 0.35);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.gold-gradient-btn:hover {
+  background: #C6A15B;
+  box-shadow: 0 10px 24px -4px rgba(198, 161, 91, 0.45);
+  transform: translateY(-1px);
+}
+
+/* Natural Tones Glassmorphism & Card styling */
+.glass-panel {
+  background: rgba(250, 245, 232, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(212, 175, 103, 0.45);
+  box-shadow: 0 10px 30px -10px rgba(90, 90, 64, 0.08);
+}
+
+.glass-panel-deep {
+  background: #FAF5E8;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid #D4AF67;
+  box-shadow: 0 14px 36px -10px rgba(90, 90, 64, 0.12);
+}
+
+/* Shimmer animation */
+@keyframes goldShimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.shimmer-gold {
+  background: linear-gradient(90deg, rgba(212, 175, 103, 0.08) 0%, rgba(230, 215, 184, 0.4) 50%, rgba(212, 175, 103, 0.08) 100%);
+  background-size: 200% 100%;
+  animation: goldShimmer 3s infinite linear;
+}
+
+/* Subtle pulse glow */
+@keyframes subtleGlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 10px rgba(212, 175, 103, 0.25));
+  }
+  50% {
+    filter: drop-shadow(0 0 20px rgba(212, 175, 103, 0.5));
+  }
+}
+
+.subtle-glow {
+  animation: subtleGlow 4s ease-in-out infinite;
+}
+
+/* Custom scrollbar matching natural tones */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D4AF67;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #C6A15B;
+}
+
+/* 3D Perspective & Transform Utilities */
+.perspective-1200 {
+  perspective: 1200px;
+  -webkit-perspective: 1200px;
+}
+
+.perspective-800 {
+  perspective: 800px;
+  -webkit-perspective: 800px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+}
+
+/* Champagne Metallic Gold 3D Text */
+.champagne-gold-3d {
+  background: linear-gradient(135deg, #FFFDF7 0%, #F5E5C0 22%, #D4AF67 48%, #F7EDD6 65%, #C6A15B 80%, #8C6A28 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 8px rgba(140, 106, 40, 0.25));
+}
+
+/* Traveling Metallic Light Sweep across text */
+@keyframes sweepLight {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-text-sweep {
+  background: linear-gradient(
+    90deg,
+    #2A241E 0%,
+    #8C6A28 20%,
+    #D4AF67 40%,
+    #FFFDF7 50%,
+    #D4AF67 60%,
+    #8C6A28 80%,
+    #2A241E 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: sweepLight 4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+/* Photo Card Golden Rim Lighting */
+.gold-rim-lighting {
+  box-shadow: 
+    0 0 0 1px rgba(212, 175, 103, 0.5),
+    0 0 35px 2px rgba(212, 175, 103, 0.28),
+    0 25px 60px -15px rgba(26, 22, 18, 0.35);
+}
+
+.gold-rim-lighting-active {
+  box-shadow: 
+    0 0 0 1.5px rgba(245, 229, 192, 0.8),
+    0 0 50px 6px rgba(212, 175, 103, 0.45),
+    0 30px 70px -15px rgba(26, 22, 18, 0.45);
+}
+
+/* Thin Drawing Gold Lines */
+@keyframes drawStroke {
+  from {
+    stroke-dashoffset: 1000;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.draw-gold-line {
+  stroke-dasharray: 1000;
+  animation: drawStroke 2.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
